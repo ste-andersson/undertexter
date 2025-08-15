@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KortSubs – korta undertexter från video</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <h1>KortSubs</h1>
+    <p>Ladda upp en video- eller ljudfil och få <strong>korta</strong> undertexter (SRT/VTT) med ord-tidsstämplar.</p>
+    <form action="/transcribe" method="post" enctype="multipart/form-data">
+      <label>Fil (video/ljud)
+        <input type="file" name="file" accept="audio/*,video/*" required>
+      </label>
+
+      <label>Språk (ISO)
+        <input type="text" name="language" value="sv">
+      </label>
+
+      <label>Utformat
+        <select name="outfmt">
+          <option value="srt">SRT</option>
+          <option value="vtt">WebVTT</option>
+        </select>
+      </label>
+
+      <fieldset>
+        <legend>Segmentering (för korta undertexter)</legend>
+        <div class="grid">
+          <label>Max tecken per rad
+            <input type="number" name="max_chars" value="38">
+          </label>
+          <label>Max ord per rad
+            <input type="number" name="max_words" value="9">
+          </label>
+          <label>Max varaktighet (s)
+            <input type="number" step="0.1" name="max_dur" value="2.5">
+          </label>
+          <label>Min varaktighet (s)
+            <input type="number" step="0.1" name="min_dur" value="0.8">
+          </label>
+        </div>
+      </fieldset>
+
+      <button type="submit">Transkribera</button>
+    </form>
+
+    <p class="note">
+      Tips: För ordnivå krävs <code>whisper-1</code> och <code>response_format=verbose_json</code> + <code>timestamp_granularities=["word"]</code>.
+    </p>
+  </div>
+</body>
+</html>
